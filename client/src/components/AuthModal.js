@@ -31,8 +31,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
 
             const success = response.status === 201
 
-            if (success && isSignUp) navigate('/assignment') //make a profile setup page
-            if (success && !isSignUp) navigate('/explore')
+            if (success) navigate('/explore') //make explore page
         } catch (error) {
             console.log(error)
         }

@@ -95,4 +95,32 @@ app.get('/users', async (req, res) => {
     }
 })
 
+app.put('/user', async (req, res) => {
+    const client = new MongoClient(uri)
+    const formData = req.body.formData
+    console.log(formData)
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
+        const quotes = database.collection('quote-requests')
+        const data = {
+                user_id: formData.user_id,
+                name: formData.full_name,
+                type: formData.type,
+                date: formData.date,
+                pages: formData.pages,
+                topic: formData.topic,
+                details: formData.details,
+                file: formData.file,
+                email: formData.user_id,
+        }
+        console.log(data)
+        const insertedUser = await quotes.insertOne(data)
+        res.send(insertedUser)
+    } finally {
+        await client.close()
+    }
+})
+
 app.listen(PORT, () => { console.log(`server running on ${PORT}`) })

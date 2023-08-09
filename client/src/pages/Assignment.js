@@ -1,8 +1,12 @@
 import { useState } from "react";
 import Nav from "../components/Nav";
+import Dropdown from "../components/dropdown";
 import ReactDatePicker from "../components/datepicker";
 import PlusMinus from "../components/plusminus";
+import { useCookies } from 'react-cookie'
 import FileUpload from "../components/fileuploader";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 const Assignment = () => {
@@ -14,8 +18,18 @@ const Assignment = () => {
     }))
     return date;
   }
+
+  const handleBranch = (branch) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      "branch": branch
+    }))
+    return branch;
+  }
+
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const [formData, setFormData] = useState({
-    user_id: '',
+    user_id: cookies.userId,
     full_name: '',
     type: '',
     date: { handleDate },
@@ -26,8 +40,16 @@ const Assignment = () => {
     email: ''
   })
 
-  const handleSubmit = (e) => {
+  let navigate = useNavigate()
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.put('http://localhost:8000/user', { formData })
+      const success = response.status === 200
+      if (success) navigate('/thankyou')
+    } catch (err) {
+      console.log(err)
+    }
   }
 
 
@@ -48,6 +70,7 @@ const Assignment = () => {
   return (
     <>
       <Nav
+        authToken={true}
         minimal={true}
         setShowModal={() => { }}
         showModal={false} />
@@ -64,8 +87,29 @@ const Assignment = () => {
                 type="text"
                 name="full_name"
                 placeholder="Name"
-                required="true"
+                required
                 value={formData.full_name}
+                onChange={handleChange}
+              />
+              <label htmlFor="branch">Branch</label>
+              <Dropdown
+                id="branch"
+                type="text"
+                name="branch"
+                placeholder=""
+                required
+                value={formData.full_name}
+                handleBranch={handleBranch}
+              />
+              <label htmlFor="number">Phone Number</label>
+              <input
+                id="number"
+                type="tel"
+                name="number"
+                placeholder="Phone number"
+                required
+                pattern="[0-9]{10}"
+                value={formData.number}
                 onChange={handleChange}
               />
               <label htmlFor="order-type">Assignment Type</label>
@@ -81,10 +125,10 @@ const Assignment = () => {
               <div className="page-container">
                 <PlusMinus type={formData.type} handleChange={handleChange} />
               </div>
-              <label htmlFor="Topic">Topic</label>
-              <input id="topic" name="topic" required="true" placeholder="Main idea" type="text" onChange={handleChange} value={formData.topic} />
             </section>
             <section className="section2">
+              <label htmlFor="Topic">Topic</label>
+              <input id="topic" name="topic" required="true" placeholder="Main idea" type="text" onChange={handleChange} value={formData.topic} />
               <label htmlFor="detailed-instruction">Detailed Instructions</label>
               <textarea required="true" type="text" id="details" name="details" placeholder="Requirements like writing style, references, structure etc" value={formData.details} onChange={handleChange} />
             </section>

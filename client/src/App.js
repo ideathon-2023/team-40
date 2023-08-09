@@ -1,5 +1,5 @@
 import Home from './pages/Home';
-import DashBoard from './pages/DashBoard';
+import Explore from './pages/explore';
 import Assignment from './pages/Assignment';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -8,7 +8,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/DashBoard" element={<DashBoard />} />
+        <Route path="/Explore" element={<Explore />} />
         <Route path="/Assignment" element={<Assignment />} />
       </Routes>
     </BrowserRouter>

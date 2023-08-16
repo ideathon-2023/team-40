@@ -12,9 +12,16 @@ import axios from "axios";
 const Assignment = () => {
 
   const handleDate = (date) => {
+    const adjustedDate = date;
+    if (adjustedDate.toDateString() === new Date().toDateString()) {
+      adjustedDate.setDate(adjustedDate.getDate() + 1);
+    }
+
+    const formattedDate = adjustedDate.toLocaleDateString();
+
     setFormData((prevState) => ({
       ...prevState,
-      "date": date
+      "date": formattedDate
     }))
     return date;
   }
@@ -27,30 +34,60 @@ const Assignment = () => {
     return branch;
   }
 
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  const handleSelectedFiles = (selectedFile) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      "file": selectedFile,
+    }))
+    return selectedFile;
+  }
+
+  const [cookies, ,] = useCookies(['user']);
   const [formData, setFormData] = useState({
-    user_id: cookies.userId,
+    user_id: cookies.UserId,
     full_name: '',
+    branch: '',
+    number: '',
     type: '',
-    date: { handleDate },
+    date: '',
     pages: '1',
     topic: '',
     details: '',
     file: '',
-    email: ''
+    email: cookies.Email
   })
+
+  if (!formData.date) {
+    handleDate(new Date())
+  }
 
   let navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.put('http://localhost:8000/user', { formData })
-      const success = response.status === 200
-      if (success) navigate('/thankyou')
-    } catch (err) {
-      console.log(err)
+    const uploadButton = document.getElementById("upload-button");
+    if (uploadButton) {
+      uploadButton.click();
     }
-  }
+    try {
+      const formDataObj = new FormData();
+      for (const key in formData) {
+        formDataObj.append(key, formData[key]);
+      }
+
+      const response = await axios.put('http://localhost:8000/query', formDataObj, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      const success = response.status === 200;
+      if (success) navigate('/thankyou');
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
+
 
 
   const handleChange = (e) => {
@@ -62,8 +99,8 @@ const Assignment = () => {
       [name]: value
     }))
 
+    console.log(formData)
   }
-  console.log(formData)
 
 
 
@@ -78,7 +115,7 @@ const Assignment = () => {
         <div className="top-description"><h1>Get Your Assignments Done!</h1>
           <p>Tell us about your assignment details and our experts will get back to you in no time.</p>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="main-block">
             <section className="section1">
               <label htmlFor="name">Name</label>
@@ -98,7 +135,7 @@ const Assignment = () => {
                 name="branch"
                 placeholder=""
                 required
-                value={formData.full_name}
+                value={formData.branch}
                 handleBranch={handleBranch}
               />
               <label htmlFor="number">Phone Number</label>
@@ -135,7 +172,7 @@ const Assignment = () => {
             <section className="section3">
               {/* <label htmlFor="attatchment">Attach A File</label> */}
               {/* <input type="url" name="url" id="url" onChange={handleChange} required="true" value={formData.url} /> */}
-              <FileUpload />
+              <FileUpload handleFiles={handleSelectedFiles} />
               <button className="primary-button">Get a Quote!</button>
             </section>
           </div>

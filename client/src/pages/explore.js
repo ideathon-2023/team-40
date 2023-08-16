@@ -1,3 +1,4 @@
+import LeafletMap from "../components/LeafletMap";
 import Nav from "../components/Nav";
 
 const Explore = () => {
@@ -8,6 +9,7 @@ const Explore = () => {
         minimal={true}
         setShowModal={() => { }}
         showModal={false} />
+        <LeafletMap/>
     </div>
   );
 }

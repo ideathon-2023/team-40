@@ -5,21 +5,38 @@ const { MongoClient } = require('mongodb')
 const { v4: uuidv4 } = require('uuid')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
-const uri = 'mongodb+srv://harshitgulatibt22aero:mypassword@cluster1.xtkvrz4.mongodb.net/?retryWrites=true&w=majority'
+const multer = require('multer')
+require('dotenv').config()
+const uri = process.env.URI
 
 const app = express()
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+}))
 app.use(express.json())
-
-app.get('/', (req, res) => {
-    res.json('hello to my app')
+// const storage = multer.memoryStorage()
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/images')
+    },
+    filename: function (req, file, cb) {
+        console.log(file);
+        cb(null, Date.now() + "--" + file.originalname);
+    }
 })
+
+const upload = multer({
+    storage: storage,
+    // limits: { fileSize: 3000000 }
+});
 
 app.post('/signup', async (req, res) => {
     const client = new MongoClient(uri)
     const { email, password } = req.body
 
-    const generateUserId = uuidv4()
+    const generatedUserId = uuidv4()
     const hashedPassword = await bcrypt.hash(password, 10)
 
     try {
@@ -36,84 +53,110 @@ app.post('/signup', async (req, res) => {
         const sanitizedEmail = email.toLowerCase()
 
         const data = {
-            user_id: generateUserId,
+            user_id: generatedUserId,
             email: sanitizedEmail,
             hashed_password: hashedPassword,
         }
 
-        const insertedUser = await users.insertOne(data)
+        const insertionResult = await users.insertOne(data);
 
-        const token = jwt.sign(insertedUser, sanitizedEmail, {
+        if (insertionResult.insertedCount !== 1) {
+            return res.status(500).json({ message: 'User registration failed. Please try again later.' });
+        }
+
+        const payload = { userId: generatedUserId, email: sanitizedEmail }
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: 60 * 24,
         })
 
-        res.status(201).json({ token, userID: generateUserId, email: sanitizedEmail })
+        res.status(201).json({ token, userID: generatedUserId, email: sanitizedEmail })
     } catch (err) {
         console.log(err)
+        res.status(500).json({ message: 'An error occurred. Please try again later.' });
+    } finally {
+        await client.close();
     }
 })
 
 app.post('/login', async (req, res) => {
-    const client = new MongoClient(uri)
     const { email, password } = req.body
+
+    const client = new MongoClient(uri)
 
     try {
         await client.connect()
+
         const database = client.db('app-data')
         const users = database.collection('users')
 
         const user = await users.findOne({ email })
 
-        const correctPassword = await bcrypt.compare(password, user.hashed_password)
+        if (user) {
+            const correctPassword = await bcrypt.compare(password, user.hashed_password);
 
-        if (user && correctPassword) {
-            const token = jwt.sign(user, email, {
-                expiresIn: 60 * 24
-            })
-            res.status(201).json({ token, userId: user.user_id, email })
-        }
-        else {
-            res.status(400).send('Invalid Credentials')
+            if (correctPassword) {
+                const payload = { userId: user.user_id, email: user.email };
+                const token = jwt.sign(payload, process.env.JWT_SECRET, {
+                    expiresIn: 60 * 24 // Token expires in 24 hours
+                });
+                res.status(201).json({ token, userId: user.user_id, email: user.email });
+            } else {
+                res.status(401).json({ message: "Invalid password" });
+            }
+        } else {
+            res.status(404).json({ message: "User not found" });
         }
     } catch (err) {
         console.log(err)
-    }
-})
-
-app.get('/users', async (req, res) => {
-    const client = new MongoClient(uri)
-
-    try {
-        await client.connect()
-        const database = client.db('app-data')
-        const users = database.collection('users')
-
-        const returnedUsers = await users.find().toArray()
-        res.send(returnedUsers)
+        res.status(500).json({ message: "An error occurred. Please try again later." });
     } finally {
-        await client.close()
+        await client.close();
     }
 })
 
-app.put('/user', async (req, res) => {
+// app.post('/logout', async (req, res) => {
+//     res.cookie('jwt', '', {
+//         httpOnly: true,
+//         expires: new Date(0),
+//     });
+
+//     res.status(201).json({ message: 'User logged out' })
+// })
+
+// app.get('/users', async (req, res) => {
+//     const client = new MongoClient(uri)
+
+//     try {
+//         await client.connect()
+//         const database = client.db('app-data')
+//         const users = database.collection('users')
+
+//         const returnedUsers = await users.find().toArray()
+//         res.send(returnedUsers)
+//     } finally {
+//         await client.close()
+//     }
+// })
+
+app.put('/query', upload.single('file'), async (req, res) => {
     const client = new MongoClient(uri)
-    const formData = req.body.formData
+    const formData = req.body
+    console.log(req.file)
     console.log(formData)
     try {
         await client.connect()
         const database = client.db('app-data')
-        const users = database.collection('users')
         const quotes = database.collection('quote-requests')
         const data = {
-                user_id: formData.user_id,
-                name: formData.full_name,
-                type: formData.type,
-                date: formData.date,
-                pages: formData.pages,
-                topic: formData.topic,
-                details: formData.details,
-                file: formData.file,
-                email: formData.user_id,
+            user_id: formData.user_id,
+            name: formData.full_name,
+            type: formData.type,
+            date: formData.date,
+            pages: formData.pages,
+            topic: formData.topic,
+            details: formData.details,
+            files: req.file,
+            email: formData.email,
         }
         console.log(data)
         const insertedUser = await quotes.insertOne(data)

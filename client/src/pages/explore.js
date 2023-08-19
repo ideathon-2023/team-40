@@ -1,3 +1,4 @@
+import Footer from "../components/footer/footer";
 import LeafletMap from "../components/leaflet/LeafletMap";
 import Nav from "../components/nav/Nav";
 
@@ -8,7 +9,8 @@ const Explore = () => {
         minimal={true}
         setShowModal={() => { }}
         showModal={false} />
-        <LeafletMap/>
+      <LeafletMap />
+      <Footer />
     </div>
   );
 }

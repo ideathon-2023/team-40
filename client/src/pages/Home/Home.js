@@ -2,6 +2,7 @@ import Nav from "../../components/nav/Nav";
 import AuthModal from "../../components/AuthModal";
 import { useState, useEffect } from 'react';
 import "./Home.css";
+import Footer from "../../components/footer/footer";
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
@@ -42,6 +43,7 @@ const Home = () => {
           <AuthModal setShowModal={setShowModal} showModal={showModal} isSignUp={isSignUp} />
         )}
       </div>
+      <Footer/>
     </div >
   );
 }

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/nav/Nav";
+import Footer from "../components/footer/footer";
 
 const Logout = () => {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Logout = () => {
                 <h1>Logged Out Successfully!</h1>
                 <button className="primary-button" onClick={navigateToExplore}>Sign In or Log In</button>
             </div>
+            <Footer/>
         </div>
     );
 }

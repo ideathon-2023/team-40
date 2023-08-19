@@ -8,6 +8,7 @@ import FileUpload from "../../components/fileuploader/fileuploader";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Assignment.css"
+import Footer from "../../components/footer/footer";
 
 
 const Assignment = () => {
@@ -178,6 +179,7 @@ const Assignment = () => {
         </form>
 
       </div>
+      <Footer/>
     </>
   );
 }

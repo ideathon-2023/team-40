@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Nav from "../../components/nav/Nav";
 import "./thankyou.css";
+import Footer from "../../components/footer/footer";
 
 const Thankyou = () => {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Thankyou = () => {
                 <p>Your assignment query has been successfully submitted. Our experts will review the details and get back to you soon.</p>
                 <button className="primary-button" onClick={navigateToExplore}>Continue Exploring</button>
             </div>
+            <Footer/>
         </div>
     );
 }

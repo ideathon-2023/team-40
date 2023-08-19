@@ -1,4 +1,3 @@
-// const path = require('path')
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const { MongoClient } = require('mongodb')
@@ -11,21 +10,9 @@ const uri = process.env.URI
 const PORT = process.env.PORT
 
 const app = express()
-// app.use(cors({
-//     origin: 'https://pec-explorer.netlify.app/',
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//     credentials: true,
-// }))
 app.use(cors())
 app.use(express.json())
 
-// if (process.env.NODE_ENV === 'production') {
-//     const __dirname = path.resolve();
-//     app.use(express.static(path.join(__dirname, '../client/build')));
-
-//     app.get('*', (req, res) => { res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')) });
-// } else {
-// }
 app.get('/', (req, res) => res.send('Server is ready'));
 
 const storage = multer.diskStorage({
@@ -33,7 +20,6 @@ const storage = multer.diskStorage({
         cb(null, 'public/images')
     },
     filename: function (req, file, cb) {
-        // console.log(file);
         cb(null, Date.now() + "--" + file.originalname);
     }
 })
@@ -89,7 +75,6 @@ app.post('/signup', async (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-    // res.header('Access-Control-Allow-Origin', 'https://pec-explorer.netlify.app/');
     const { email, password } = req.body
 
     const client = new MongoClient(uri)
@@ -137,8 +122,6 @@ app.post('/logout', async (req, res) => {
 app.put('/query', upload.single('file'), async (req, res) => {
     const client = new MongoClient(uri)
     const formData = req.body
-    // console.log(req.file)
-    // console.log(formData)
     try {
         await client.connect()
         const database = client.db('app-data')
@@ -154,7 +137,6 @@ app.put('/query', upload.single('file'), async (req, res) => {
             files: req.file,
             email: formData.email,
         }
-        // console.log(data)
         const insertedUser = await quotes.insertOne(data)
         res.send(insertedUser)
     } finally {

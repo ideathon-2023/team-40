@@ -16,7 +16,7 @@ const app = express()
 //     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 //     credentials: true,
 // }))
-app.use(cors())
+// app.use(cors())
 app.use(express.json())
 
 // if (process.env.NODE_ENV === 'production') {
@@ -89,7 +89,7 @@ app.post('/signup', async (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://pec-explorer.netlify.app/');
+    // res.header('Access-Control-Allow-Origin', 'https://pec-explorer.netlify.app/');
     const { email, password } = req.body
 
     const client = new MongoClient(uri)

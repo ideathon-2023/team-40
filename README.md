@@ -14,6 +14,7 @@
 
 + College Map:
 
+
   + Interactive map displaying the layout of the college campus.
   + Search features to find specific buildings, classrooms, and facilities.
   + Additional information about each location, such as department details.
@@ -25,6 +26,7 @@
 
 # Deployed App:
 + https://pec-explorer.netlify.app/
+
 
 # team-40: Maafia Mundeer : 
  - Harshit Gulati

@@ -1,13 +1,16 @@
-import Nav from "../components/Nav";
+import Footer from "../components/footer/footer";
+import LeafletMap from "../components/leaflet/LeafletMap";
+import Nav from "../components/nav/Nav";
 
 const Explore = () => {
   return (
     <div>
       <Nav
-        authToken={true}
         minimal={true}
         setShowModal={() => { }}
         showModal={false} />
+      <LeafletMap />
+      <Footer />
     </div>
   );
 }

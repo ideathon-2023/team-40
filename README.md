@@ -7,12 +7,15 @@
 + HTML: For markup and structure of web pages.
 + CSS: For styling the user interface.
 + JavaScript: For implementing interactivity and logic.
++ Leafletjs: To implement interactive map.
++ GeoJSON.io: To create a GeoJSON file containing the college layout.
 
 # Features:
 
 + College Map:
 
-  + Interactive maps displaying the layout of the college campus.
+
+  + Interactive map displaying the layout of the college campus.
   + Search features to find specific buildings, classrooms, and facilities.
   + Additional information about each location, such as department details.
 
@@ -21,6 +24,8 @@
   + Students can create a profile and log in to the platform.
   + They can post their assignment or project and seek a quote from other students.
 
+# Deployed App:
++ https://pec-explorer.netlify.app/
 
 
 # team-40: Maafia Mundeer : 

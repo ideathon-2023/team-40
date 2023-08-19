@@ -1,0 +1,78 @@
+/* ---- PLUS MINUS CONTAINER ---- */
+
+.page-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.plus-minus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 5px;
+  height: 40px;
+}
+
+.plus-minus input,
+.plus-minus button {
+  background: black;
+  padding: 11px 13px;
+  box-sizing: border-box;
+  color: #e9ebee;
+  font-size: 17px;
+  outline: none;
+  height: 40px;
+}
+
+.plus-minus button {
+  font-size: 16px;
+  border: 2px solid #e9ebee;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plus-minus button:hover {
+  border-color: yellow;
+  color: yellow;
+}
+
+.plus-minus #left {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.plus-minus #right {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.plus-minus button:disabled {
+  color: #666;
+  border-color: #666;
+  border-right-color: #e9ebee;
+}
+
+.plus-minus input {
+  border: none;
+  border-top: 2px solid #e9ebee;
+  border-bottom: 2px solid #e9ebee;
+  width: 55px;
+  text-align: center;
+}
+
+.plus-minus span {
+  margin-left: 5px;
+  font-size: 16px;
+  color: #e9ebee;
+}
+
+
+@media screen and (max-width:768px) {
+    .plus-minus {
+        height: 35px;
+        margin: 10px 5px;
+    }
+}

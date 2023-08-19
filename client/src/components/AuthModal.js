@@ -22,7 +22,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
                 setError('Passwords need to match!')
                 return
             }
-            const response = await axios.post(`http://localhost:8000/${isSignUp ? 'signup' : 'login'}`, { email, password })
+            const response = await axios.post(`https://pec-explorer.onrender.com/${isSignUp ? 'signup' : 'login'}`, { email, password })
 
             setCookie('Email', response.data.email, { secure: false, sameSite: 'strict', maxAge: 60 * 60 * 24 })
             setCookie('UserId', response.data.userId, { secure: false,  sameSite: 'strict', maxAge: 60 * 60 * 24 })

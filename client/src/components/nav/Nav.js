@@ -17,7 +17,7 @@ const Nav = ({ showButton = true, minimal, setShowModal, setIsSignUp }) => {
     const authToken = cookies.AuthToken;
     const handleLogOut = async () => {
         try {
-            await axios.post('http://localhost:8000/logout');
+            await axios.post('https://pec-explorer.onrender.com/logout');
             removeCookie('Email');
             removeCookie('UserId');
             removeCookie('AuthToken');

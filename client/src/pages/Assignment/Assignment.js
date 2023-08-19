@@ -75,7 +75,7 @@ const Assignment = () => {
         formDataObj.append(key, formData[key]);
       }
 
-      const response = await axios.put('http://localhost:8000/query', formDataObj, {
+      const response = await axios.put('https://pec-explorer.onrender.com/query', formDataObj, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -11,11 +11,12 @@ const uri = process.env.URI
 const PORT = process.env.PORT
 
 const app = express()
-app.use(cors({
-    origin: 'https://pec-explorer.netlify.app/',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-}))
+// app.use(cors({
+//     origin: 'https://pec-explorer.netlify.app/',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true,
+// }))
+app.use(cors())
 app.use(express.json())
 
 // if (process.env.NODE_ENV === 'production') {

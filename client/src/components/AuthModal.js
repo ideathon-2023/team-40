@@ -31,7 +31,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
             const success = response.status === 201
 
             if (success) {
-                navigate('/explore') //make explore page
+                navigate('/explore')
             }
         } catch (error) {
             console.log(error)
@@ -79,7 +79,6 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
                     <input className='primary-button secondary-button' value="Submit" type='submit' />
                     <p>{error}</p>
                 </form>
-                <hr />
             </div>
         </div>
     )

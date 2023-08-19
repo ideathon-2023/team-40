@@ -1,11 +1,10 @@
-import LeafletMap from "../components/LeafletMap";
-import Nav from "../components/Nav";
+import LeafletMap from "../components/leaflet/LeafletMap";
+import Nav from "../components/nav/Nav";
 
 const Explore = () => {
   return (
     <div>
       <Nav
-        authToken={true}
         minimal={true}
         setShowModal={() => { }}
         showModal={false} />

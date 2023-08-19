@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Plusminus.css";
 
 const PlusMinus = ({ handleChange, type }) => {
     let [count, setCount] = useState(1);

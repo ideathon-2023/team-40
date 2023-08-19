@@ -1,0 +1,124 @@
+/*-------- NAVBAR --------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 64px;
+  align-items: center;
+}
+
+.not-minimal {
+  background: linear-gradient(
+    to bottom,
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+.minimal {
+  background-color: rgb(17, 20, 24);
+  border-bottom: 1px solid #3c444f;
+}
+
+nav .logo-container {
+  margin: 0px;
+}
+
+nav .logo-container .logo {
+  width: 200px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.right div {
+  color: #e9ebee;
+  font-size: 18px;
+  margin-left: 20px;
+  cursor: pointer;
+  height: 100%;
+}
+
+.right div:hover {
+  opacity: 0.8;
+}
+
+.assignment-div {
+  margin-right: 10px;
+}
+
+.nav-button {
+  color: black;
+  background-color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 22px;
+  margin: 10px;
+  height: 36px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition-duration: 0.6s;
+}
+
+.nav-button:hover {
+  opacity: 0.8;
+}
+
+.icon-img {
+  color: white;
+  width: 25px;
+  height: 25px;
+  filter: invert(93%) sepia(1%) saturate(630%) hue-rotate(182deg)
+    brightness(106%) contrast(87%);
+  margin: 0 10px;
+  display: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  nav {
+    height: 56px;
+    transition: height 0.5s ease-in-out;
+  }
+  .right {
+    display: none;
+  }
+  .icon-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+  }
+  nav.open {
+    height: calc(56px * 4);
+    flex-direction: column;
+    transition: height 0.5s ease-in-out;
+  }
+  .right.open {
+    display: flex;
+    height: calc(56px * 3);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

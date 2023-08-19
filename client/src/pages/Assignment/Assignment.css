@@ -1,0 +1,232 @@
+/* ---- ASSIGNMENT PAGE ---- */
+
+* {
+  box-sizing: border-box;
+}
+
+.assignment {
+  margin: 0;
+  background-color: #111418;
+  height: calc(100vh - 64px);
+  color: #e9ebee;
+}
+
+.top-description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgb(0, 0, 0);
+  height: 25vh;
+  width: 100vw;
+}
+
+.top-description h1 {
+  text-align: center;
+  margin: 0;
+  font-weight: 700;
+  font-size: 44px;
+  font-style: italic;
+}
+
+.top-description p {
+  color: rgb(147, 155, 167);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.assignment form {
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 20px;
+  max-width: 1064px;
+  margin: 0 auto;
+  display: block;
+  overflow: auto;
+}
+
+form label {
+  margin-top: 5px;
+  color: #e9ebee;
+  padding: 0 5px;
+}
+
+.main-block {
+  margin: 0 auto;
+  max-width: 1064px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  padding: 15px;
+}
+
+.section1 {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 33%;
+  box-sizing: border-box;
+  margin-right: 1vw;
+}
+
+.dropdown {
+  border-radius: 8px;
+  max-width: 480px;
+  width: 100%;
+  margin: 10px 5px;
+}
+
+.section2 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0;
+  flex-direction: column;
+  width: 33%;
+  box-sizing: border-box;
+  margin-right: 1vw;
+}
+
+#details {
+  height: 380px;
+  width: 100%;
+  text-align: start;
+  vertical-align: text-top;
+  display: table-cell;
+  resize: none;
+}
+
+.section3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 33%;
+  box-sizing: border-box;
+}
+
+select {
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(233, 235, 238, 0.2);
+  color: rgb(233, 235, 238);
+  max-width: 480px;
+  width: 100%;
+  font-size: 17px;
+  padding: 11px 13px;
+  height: 100%;
+}
+
+select:focus {
+  outline: none;
+  border: 1px solid rgba(23, 134, 255, 0.7);
+}
+
+select:hover {
+  cursor: pointer;
+}
+
+.btn-group {
+  display: flex;
+}
+
+.btn-group input {
+  display: none;
+}
+
+.btn-group label {
+  color: #e9ebee;
+  padding: 7px 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+  cursor: pointer;
+  border: 2px solid #e9ebee;
+  margin: 5px;
+  transition: all 700ms ease-out;
+  border-radius: 8px;
+}
+
+.btn-group label:hover {
+  color: yellow;
+  border: 2px dashed yellow;
+}
+
+#writing-label,
+#ppt-label {
+  margin: 10px 5px;
+}
+
+.btn-group input[type="radio"]:checked + label {
+  color: yellow;
+  border: 2px solid yellow;
+}
+
+.assignment input[type="text"],
+input[type="number"],
+textarea,
+input[type="url"],
+input[type="tel"] {
+  max-width: 480px;
+  width: 100%;
+  margin: 5px auto;
+  padding: 11px 13px;
+  font-size: 17px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(233, 235, 238, 0.2);
+  color: rgb(233, 235, 238);
+  box-sizing: border-box;
+}
+
+.assignment input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+textarea:focus,
+input[type="tel"]:focus {
+  outline: none;
+  border: 1px solid rgba(23, 134, 255, 0.7);
+}
+
+@media screen and (max-width: 768px) {
+  .top-description {
+    height: 20vh !important;
+    padding: 5px 15px;
+  }
+  .top-description h1 {
+    font-size: 30px;
+  }
+  .top-description p {
+    font-size: 15px;
+    padding: 10px;
+  }
+  .assignment form {
+    min-height: 100%;
+    padding-top: 0;
+  }
+  .main-block {
+    flex-direction: column;
+  }
+  .section1 {
+    width: 90vw !important;
+    margin-right: 0;
+  }
+  #writing-label {
+    margin: 10px 5px;
+  }
+  #ppt-label {
+    margin: 10px 5px;
+  }
+  .section2 {
+    width: 90vw;
+    margin-right: 0;
+  }
+  #details {
+    height: 350px;
+  }
+  .section3 {
+    flex-direction: column;
+    width: 90vw;
+  }
+}

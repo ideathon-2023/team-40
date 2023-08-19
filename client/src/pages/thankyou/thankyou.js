@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Nav from "../components/Nav";
+import Nav from "../../components/nav/Nav";
+import "./thankyou.css";
 
 const Thankyou = () => {
     const navigate = useNavigate();
@@ -9,8 +10,7 @@ const Thankyou = () => {
     return (
         <div>
             <Nav
-                authToken={true}
-                minimal={false}
+                minimal={true}
                 setShowModal={() => { }}
                 showModal={false} />
             <div className="thank-you">

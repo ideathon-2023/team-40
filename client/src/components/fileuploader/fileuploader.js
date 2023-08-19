@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import "./fileuploader.css";
 
 const FileUpload = ({ handleFiles }) => {
   const [files, setFiles] = useState(null);
@@ -24,9 +25,6 @@ const FileUpload = ({ handleFiles }) => {
     <div className="uploads">
       <label>Selected File: {files[0].name}</label>
       <img src={URL.createObjectURL(files[0])} alt="File Preview" />
-      {/* <ul>
-        {Array.from(files).map((file, idx) => <li key={idx}>{file.name}</li>)}
-      </ul> */}
       <div className="actions">
         <button className="nav-button" onClick={(e) => { e.preventDefault(); setFiles(null); }}>Cancel</button>
         <button className="nav-button" id="upload-button" onClick={handleUpload}>Upload</button>

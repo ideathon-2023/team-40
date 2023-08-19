@@ -1,4 +1,4 @@
-const PORT = 8000
+const path = require('path')
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const { MongoClient } = require('mongodb')
@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt')
 const multer = require('multer')
 require('dotenv').config()
 const uri = process.env.URI
+const PORT = process.env.PORT
 
 const app = express()
 app.use(cors({
@@ -16,20 +17,28 @@ app.use(cors({
     credentials: true,
 }))
 app.use(express.json())
-// const storage = multer.memoryStorage()
+
+if (process.env.NODE_ENV === 'production') {
+    const __dirname = path.resolve();
+    app.use(express.static(path.join(__dirname, '../client/build')));
+
+    app.get('*', (req, res) => { res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')) });
+} else {
+    app.get('/', (req, res) => res.send('Server is ready'));
+}
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/images')
     },
     filename: function (req, file, cb) {
-        console.log(file);
+        // console.log(file);
         cb(null, Date.now() + "--" + file.originalname);
     }
 })
 
 const upload = multer({
     storage: storage,
-    // limits: { fileSize: 3000000 }
 });
 
 app.post('/signup', async (req, res) => {
@@ -114,35 +123,20 @@ app.post('/login', async (req, res) => {
     }
 })
 
-// app.post('/logout', async (req, res) => {
-//     res.cookie('jwt', '', {
-//         httpOnly: true,
-//         expires: new Date(0),
-//     });
+app.post('/logout', async (req, res) => {
+    res.cookie('jwt', '', {
+        httpOnly: true,
+        expires: new Date(0),
+    });
 
-//     res.status(201).json({ message: 'User logged out' })
-// })
-
-// app.get('/users', async (req, res) => {
-//     const client = new MongoClient(uri)
-
-//     try {
-//         await client.connect()
-//         const database = client.db('app-data')
-//         const users = database.collection('users')
-
-//         const returnedUsers = await users.find().toArray()
-//         res.send(returnedUsers)
-//     } finally {
-//         await client.close()
-//     }
-// })
+    res.status(201).json({ message: 'User logged out' })
+})
 
 app.put('/query', upload.single('file'), async (req, res) => {
     const client = new MongoClient(uri)
     const formData = req.body
-    console.log(req.file)
-    console.log(formData)
+    // console.log(req.file)
+    // console.log(formData)
     try {
         await client.connect()
         const database = client.db('app-data')
@@ -158,7 +152,7 @@ app.put('/query', upload.single('file'), async (req, res) => {
             files: req.file,
             email: formData.email,
         }
-        console.log(data)
+        // console.log(data)
         const insertedUser = await quotes.insertOne(data)
         res.send(insertedUser)
     } finally {

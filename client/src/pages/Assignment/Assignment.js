@@ -1,12 +1,13 @@
 import { useState } from "react";
-import Nav from "../components/Nav";
-import Dropdown from "../components/dropdown";
-import ReactDatePicker from "../components/datepicker";
-import PlusMinus from "../components/plusminus";
+import Nav from "../../components/nav/Nav";
+import Dropdown from "../../components/Dropdown/dropdown";
+import ReactDatePicker from "../../components/datepicker/datepicker";
+import PlusMinus from "../../components/PlusMinus/plusminus";
 import { useCookies } from 'react-cookie'
-import FileUpload from "../components/fileuploader";
+import FileUpload from "../../components/fileuploader/fileuploader";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./Assignment.css"
 
 
 const Assignment = () => {
@@ -99,7 +100,7 @@ const Assignment = () => {
       [name]: value
     }))
 
-    console.log(formData)
+    // console.log(formData)
   }
 
 
@@ -170,8 +171,6 @@ const Assignment = () => {
               <textarea required="true" type="text" id="details" name="details" placeholder="Requirements like writing style, references, structure etc" value={formData.details} onChange={handleChange} />
             </section>
             <section className="section3">
-              {/* <label htmlFor="attatchment">Attach A File</label> */}
-              {/* <input type="url" name="url" id="url" onChange={handleChange} required="true" value={formData.url} /> */}
               <FileUpload handleFiles={handleSelectedFiles} />
               <button className="primary-button">Get a Quote!</button>
             </section>

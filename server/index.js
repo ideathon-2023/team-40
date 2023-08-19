@@ -88,6 +88,7 @@ app.post('/signup', async (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'https://pec-explorer.netlify.app/');
     const { email, password } = req.body
 
     const client = new MongoClient(uri)

@@ -23,7 +23,8 @@
   + Students can create a profile and log in to the platform.
   + They can post their assignment or project and seek a quote from other students.
 
-
+# Deployed App:
++ https://pec-explorer.netlify.app/
 
 # team-40: Maafia Mundeer : 
  - Harshit Gulati

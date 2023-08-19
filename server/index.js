@@ -18,14 +18,14 @@ app.use(cors({
 }))
 app.use(express.json())
 
-if (process.env.NODE_ENV === 'production') {
-    const __dirname = path.resolve();
-    app.use(express.static(path.join(__dirname, '../client/build')));
+// if (process.env.NODE_ENV === 'production') {
+//     const __dirname = path.resolve();
+//     app.use(express.static(path.join(__dirname, '../client/build')));
 
-    app.get('*', (req, res) => { res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')) });
-} else {
-    app.get('/', (req, res) => res.send('Server is ready'));
-}
+//     app.get('*', (req, res) => { res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')) });
+// } else {
+// }
+app.get('/', (req, res) => res.send('Server is ready'));
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

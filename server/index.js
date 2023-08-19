@@ -1,4 +1,4 @@
-const path = require('path')
+// const path = require('path')
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const { MongoClient } = require('mongodb')
@@ -16,7 +16,7 @@ const app = express()
 //     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 //     credentials: true,
 // }))
-// app.use(cors())
+app.use(cors())
 app.use(express.json())
 
 // if (process.env.NODE_ENV === 'production') {
